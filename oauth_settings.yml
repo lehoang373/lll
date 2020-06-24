@@ -1,0 +1,7 @@
+app_id: "e51a9fa6-6023-44ab-982d-1d396c877bb6"
+app_secret: "m7Ikv48.-3Z6c.2xm79jDyhhdYq9pD.5cS"
+redirect: "http://localhost:8000/callback"
+scopes: "openid profile offline_access user.read calendars.read"
+authority: "https://login.microsoftonline.com/schemmer.onmicrosoft.com"
+authorize_endpoint: "/oauth2/v2.0/authorize"
+token_endpoint: "/oauth2/v2.0/token"

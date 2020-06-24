@@ -1,0 +1,83 @@
+{% extends 'll/base.html' %}
+{% block content %}
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Lessons Learned</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    </head>
+    <body>
+    <style>
+        body {
+            background-color: beige;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Welcome!</div>
+                    <div class="panel-body">
+                        Lessons Learned!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h2 style="padding-left: 15Px">Lessons Learned</h2>
+    </div>
+    <div>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr class="bg-info">
+                <th>Project Name</th>
+                <th>Project Number</th>
+                <th>Client</th>
+                <th>Project Location</th>
+                <th>Description</th>
+                <th>Division</th>
+                <th>Market Sector</th>
+                <th>Discipline</th>
+                <th>Author</th>
+                <th>Link File</th>
+                <th colspan="3">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for lesson in lessons %}
+                <tr>
+                    <td>{{ lesson.project_name }}</td>
+                    <td>{{ lesson.project_number }}</td>
+                     <td>{{ lesson.client }}</td>
+                    <td>{{ lesson.project_location }}</td>
+                    <td>{{ lesson.description }}</td>
+                    <td>{{ lesson.division }}</td>
+                     <td>{{ lesson.market_sector }}</td>
+                    <td>{{ lesson.discipline }}</td>
+                    <td>{{ lesson.author }}</td>
+                    <td>{{ lesson.link_file }}</td>
+
+                    {% if request.user.is_staff %}
+                    <td><a href="{% url 'll:lesson_edit' pk=lesson.pk %}"
+                           class="btn btn-warning">Edit</a></td>
+                    <td><a href="{% url 'll:lesson_delete' pk=lesson.pk %}"
+                           onclick="return confirm('Are you sure you want to delete?')"
+                           class="btn btn-danger">Delete</a>
+                    </td>
+                    {% endif %}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+     <div class="row">
+         <a href="{% url 'll:lesson_new' %}" class="row"><span
+                    class="btn btn-primary">Add Lesson</span></a>
+     </div>
+
+    </div>
+    </body>
+    </html>
+{% endblock %}
