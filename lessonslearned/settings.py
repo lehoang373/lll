@@ -24,6 +24,7 @@ SECRET_KEY = '4v7@ndrcf)nti0wz1tq=e7si88f7(cz7qg$gpcxeq4@!usgn68'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+USE_DJANGO_JQUERY = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
     'django_filters',
     'widget_tweaks',
     'django.contrib.sites',
-    'microsoft_auth',
+    'smart_selects',
 ]
 
 SITE_ID = 1
@@ -74,24 +75,17 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'microsoft_auth.context_processors.microsoft',
             ],
         },
     },
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'microsoft_auth.backends.MicrosoftAuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend' # if you also want to use Django's authentication
     # I recommend keeping this with at least one database superuser in case of unable to use others
 ]
 
 WSGI_APPLICATION = 'lessonslearned.wsgi.application'
-
-MICROSOFT_AUTH_CLIENT_ID = 'e51a9fa6-6023-44ab-982d-1d396c877bb6'
-MICROSOFT_AUTH_CLIENT_SECRET = 'm7Ikv48.-3Z6c.2xm79jDyhhdYq9pD.5cS'
-
-MICROSOFT_AUTH_LOGIN_TYPE = 'ma'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

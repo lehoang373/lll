@@ -9,7 +9,6 @@ urlpatterns = [
     path('signout', views.sign_out, name='signout'),
     path('callback', views.callback, name='callback'),
 
-    path('lesson_list', views.lesson_list, name='lesson_list'),
     path('lesson/create/', views.lesson_new, name='lesson_new'),
     path('lesson/<int:pk>/edit/', views.lesson_edit, name='lesson_edit'),
     path('lesson/<int:pk>/delete/', views.lesson_delete, name='lesson_delete'),

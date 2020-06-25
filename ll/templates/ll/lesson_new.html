@@ -1,9 +1,11 @@
-{% extends 'll/base.html' %}
+{% extends 'll/layout.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
     <h1>Add a New Lesson</h1>
-    <form method="POST" class="lesson-form">{% csrf_token %}
-          {{ form|crispy }}
-        <button type="submit" class="save btn btn-default">Save</button>
+    <form method="POST">
+    {% csrf_token %}
+    {{ form.media.js }}
+    {{ form.as_p}}
+    <input type="submit" value="Save">
     </form>
 {% endblock %}

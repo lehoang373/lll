@@ -1,11 +1,31 @@
-{% extends 'll/base.html' %}
+{% extends 'll/layout.html' %}
 
 {% load widget_tweaks %}
-
+{% load static %}
 {% block content %}
-  <form method="get">
+
+<style>
+#button1{
+padding:10px;
+background-color:rgb(0,101,149);
+border-radius:10px;
+}
+
+#button2{
+padding:10px;
+background-color:rgb(75,114,29);
+border-radius:10px;
+}
+
+#button3{
+padding:10px;
+background-color:rgb(173,133,5);
+border-radius:10px;
+}
+</style>
+
+ <form method="get">
     <div class="well">
-      <h4 style="margin-top: 0">Filter</h4>
       <div class="row">
         <div class="form-group col-sm-4 col-md-3">
           {{ filter.form.project_name.label_tag }}
@@ -48,16 +68,13 @@
         </div>
 
       </div>
-      <button type="submit" class="btn btn-primary">
-        <span class="glyphicon glyphicon-search"></span> Search
-      </button>
     </div>
 
-    <div class="row">
-         <a href="{% url 'll:lesson_new' %}" class="row"><span
-                    class="btn btn-primary">Add Lesson</span></a>
-     </div>
+    <input type="submit" value="Search" id="button1">
 
+    <input type="button" class="button_active" onclick="location.href='/lesson/create/';" value="Add" id="button2"/>
+
+    <input type="button" class="button_active" onclick="location.href='/export_lessons';" value="Export" id="button3"/>
   </form>
 
   <table class="table table-bordered">
@@ -90,14 +107,18 @@
           <td>{{ lesson.author }}</td>
           <td>{{ lesson.link_file }}</td>
 
-          {% if request.user.is_staff %}
-            <td><a href="{% url 'll:lesson_edit' pk=lesson.pk %}"
-                   class="btn btn-warning">Edit</a></td>
-            <td><a href="{% url 'll:lesson_delete' pk=lesson.pk %}"
+            <td>
+              <a href="{% url 'll:lesson_edit' pk=lesson.pk %}"
+                   class="btn btn-warning">Edit</a>
+            </td>
+
+            {% if request.user.is_staff %}
+            <td>
+              <a href="{% url 'll:lesson_delete' pk=lesson.pk %}"
                    onclick="return confirm('Are you sure you want to delete?')"
                    class="btn btn-danger">Delete</a>
             </td>
-          {% endif %}
+           {% endif %}
         </tr>
       {% endfor %}
     </tbody>

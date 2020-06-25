@@ -1,9 +1,9 @@
-{% extends 'll/base.html' %}
+{% extends 'll/layout.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
     <h1>Edit Lesson</h1>
     <form method="POST" class="lesson-form">{% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Update</button>
+        <input type="submit" value="Update">
     </form>
 {% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'll/layout.html' %}
+{% load static %}
+{% block content %}
+   <body>
+    <html>
+        <div class="page-container">
+            <h2 class="top-menu">Success!</h2>
+            <p>Your lesson has been successfully added!</p>
+            <a href="{% url 'll:search' %}" class="btn btn-primary btn-large">Click here to return to lessons</a>
+        </div>
+    </body>
+    </html>
+{% endblock %}

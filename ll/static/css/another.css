@@ -1,5 +1,6 @@
 body {
-  padding-top: 4.5rem;
+  padding-top: 8rem;
+  padding-bottom: 4.5rem;
 }
 
 .alert-pre {
@@ -9,7 +10,8 @@ body {
 }
 
 .page-header {
-    background-color: #006595;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
 }
+
+
