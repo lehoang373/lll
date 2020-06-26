@@ -26,15 +26,15 @@ class Project(models.Model):
         return str(self.project_number)
 
 
-class Project_number(models.Model):
+class Projectnumber(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return "%s" % self.name
 
 
-class Project_name(models.Model):
-    project_number = models.ForeignKey(Project_number, on_delete=models.CASCADE)
+class Projectname(models.Model):
+    projectnumber = models.ForeignKey(Projectnumber, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -42,61 +42,78 @@ class Project_name(models.Model):
 
 
 class Client(models.Model):
-    project_name = models.ForeignKey(Project_name, on_delete=models.CASCADE)
+    projectnumber = models.ForeignKey(Projectnumber, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return "%s" % self.name
 
-class Project_location(models.Model):
-    client = models.ForeignKey(Project_name, on_delete=models.CASCADE)
+class Projectlocation(models.Model):
+    projectnumber = models.ForeignKey(Projectnumber, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return "%s" % self.name
 
-class Market_sector(models.Model):
-    project_location = models.ForeignKey(Project_name, on_delete=models.CASCADE)
+class Marketsector(models.Model):
+    projectnumber = models.ForeignKey(Projectnumber, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return "%s" % self.name
+
+class Memo(models.Model):
+    projectnumber = models.ForeignKey(Projectnumber, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return "%s" % self.name
+
 
 class Lesson(models.Model):
-    project_number = models.ForeignKey(Project_number, on_delete=models.CASCADE)
-    project_name = ChainedForeignKey(
-        'Project_name',
-        chained_field="project_number",
-        chained_model_field="project_number",
+    projectnumber = models.ForeignKey(Projectnumber, on_delete=models.CASCADE)
+    projectname = ChainedForeignKey(
+        'Projectname',
+        chained_field="projectnumber",
+        chained_model_field="projectnumber",
         show_all=False,
         auto_choose=True
     )
     client = ChainedForeignKey(
         'Client',
-        chained_field="project_name",
-        chained_model_field="project_name",
+        chained_field="projectnumber",
+        chained_model_field="projectnumber",
         show_all=False,
         auto_choose=True
     )
-    project_location = ChainedForeignKey(
-        'Project_location',
-        chained_field="client",
-        chained_model_field="client",
+    projectlocation = ChainedForeignKey(
+        'Projectlocation',
+        chained_field="projectnumber",
+        chained_model_field="projectnumber",
         show_all=False,
         auto_choose=True
     )
     description = models.TextField()
     division = models.CharField(max_length=20)
-    market_sector = ChainedForeignKey(
-        'Market_sector',
-        chained_field="project_location",
-        chained_model_field="project_location",
+    marketsector = ChainedForeignKey(
+        'Marketsector',
+        chained_field="projectnumber",
+        chained_model_field="projectnumber",
         show_all=False,
         auto_choose=True
     )
     discipline = models.CharField(max_length=20)
-    author = models.CharField(max_length=50)
-    link_file = models.CharField(max_length=50, blank=True)
+    author = models.CharField(max_length=100)
+    memo = ChainedForeignKey(
+        'Memo',
+        chained_field="projectnumber",
+        chained_model_field="projectnumber",
+        show_all=False,
+        auto_choose=True,
+        blank = True,
+        null=True
+    )
+    linkfile = models.CharField(max_length=50, blank=True)
     created_date = models.DateTimeField(
         default=timezone.now)
     updated_date = models.DateTimeField(default=timezone.now)
@@ -111,3 +128,4 @@ class Lesson(models.Model):
 
     def __str__(self):
         return str(self.author)
+

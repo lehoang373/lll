@@ -24,17 +24,18 @@ border-radius:10px;
 }
 </style>
 
+
  <form method="get">
     <div class="well">
       <div class="row">
         <div class="form-group col-sm-4 col-md-3">
-          {{ filter.form.project_name.label_tag }}
-          {% render_field filter.form.project_name class="form-control" %}
+          {{ filter.form.projectname.label_tag }}
+          {% render_field filter.form.projectname class="form-control" %}
         </div>
 
         <div class="form-group col-sm-4 col-md-3">
-          {{ filter.form.project_number.label_tag }}
-          {% render_field filter.form.project_number class="form-control" %}
+          {{ filter.form.projectnumber.label_tag }}
+          {% render_field filter.form.projectnumber class="form-control" %}
         </div>
 
         <div class="form-group col-sm-4 col-md-3">
@@ -43,8 +44,13 @@ border-radius:10px;
         </div>
 
         <div class="form-group col-sm-4 col-md-3">
-          {{ filter.form.project_location.label_tag }}
-          {% render_field filter.form.project_location class="form-control" %}
+          {{ filter.form.projectlocation.label_tag }}
+          {% render_field filter.form.projectlocation class="form-control" %}
+        </div>
+
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.description.label_tag }}
+          {% render_field filter.form.description class="form-control" %}
         </div>
 
          <div class="form-group col-sm-4 col-md-3">
@@ -53,8 +59,8 @@ border-radius:10px;
         </div>
 
          <div class="form-group col-sm-4 col-md-3">
-          {{ filter.form.market_sector.label_tag }}
-          {% render_field filter.form.market_sector class="form-control" %}
+          {{ filter.form.marketsector.label_tag }}
+          {% render_field filter.form.marketsector class="form-control" %}
         </div>
 
         <div class="form-group col-sm-4 col-md-3">
@@ -67,6 +73,11 @@ border-radius:10px;
           {% render_field filter.form.author class="form-control" %}
         </div>
 
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.memo.label_tag }}
+          {% render_field filter.form.memo class="form-control" %}
+        </div>
+
       </div>
     </div>
 
@@ -76,6 +87,7 @@ border-radius:10px;
 
     <input type="button" class="button_active" onclick="location.href='/export_lessons';" value="Export" id="button3"/>
   </form>
+
 
   <table class="table table-bordered">
     <thead>
@@ -89,6 +101,7 @@ border-radius:10px;
         <th>Market Sector</th>
         <th>Discipline</th>
         <th>Author</th>
+        <th>Memo</th>
         <th>Link File</th>
         <th colspan="3">Actions</th>
       </tr>
@@ -96,17 +109,17 @@ border-radius:10px;
     <tbody>
       {% for lesson in filter.qs %}
         <tr>
-          <td>{{ lesson.project_name }}</td>
-          <td>{{ lesson.project_number }}</td>
+          <td>{{ lesson.projectname }}</td>
+          <td>{{ lesson.projectnumber }}</td>
           <td>{{ lesson.client }}</td>
-          <td>{{ lesson.project_location }}</td>
+          <td>{{ lesson.projectlocation }}</td>
           <td>{{ lesson.description }}</td>
           <td>{{ lesson.division }}</td>
-          <td>{{ lesson.market_sector }}</td>
+          <td>{{ lesson.marketsector }}</td>
           <td>{{ lesson.discipline }}</td>
           <td>{{ lesson.author }}</td>
-          <td>{{ lesson.link_file }}</td>
-
+          <td>{{ lesson.memo }}</td>
+          <td>{{ lesson.linkfile }}</td>
             <td>
               <a href="{% url 'll:lesson_edit' pk=lesson.pk %}"
                    class="btn btn-warning">Edit</a>

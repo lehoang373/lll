@@ -11,8 +11,7 @@
  </head>
 
  <body>
-   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-     <div class="container">
+   <nav class="navbar navbar-expand-md navbar navbar-dark fixed-top" style="background-color: #006595;">
        <a href="{% url 'll:home' %}" class="navbar-brand">Lessons Learned</a>
        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,10 +24,9 @@
              </li>
          </ul>
          <ul class="navbar-nav justify-content-end">
-                <img src="{% static "images/Schemmer.png" %}" alt="schemmer"/>
+                <img src="{% static "images/Schemmer(white).png" %}" alt="schemmer"/>
          </ul>
        </div>
-     </div>
    </nav>
    <main role="main" class="container">
      {% if errors %}

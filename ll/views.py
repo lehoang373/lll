@@ -11,7 +11,7 @@ import csv, io
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from datetime import datetime
-
+from .resources import LessonResource
 now = timezone.now()
 
 def home(request):
@@ -105,18 +105,10 @@ def search(request):
     return render(request, 'search/user_list.html', {'filter': lesson_filter})
 
 def export_Lessons_toCSV(request):
-    fields = [f.name for f in Lesson._meta.fields]
-    timestamp = datetime.now()
-    timeappend = timestamp.strftime("%x")
-    response = HttpResponse(content_type="text/csv")
-    response[
-        "Content-Disposition"
-    ] = f"attachment; filename={timeappend}-Lesson.csv"
-    writer = csv.writer(response)
-
-    writer.writerow(fields)
-    for row in Lesson.objects.values(*fields):
-        writer.writerow([row[field] for field in fields])
+    lesson_resource = LessonResource()
+    dataset = lesson_resource.export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="lessons.csv"'
     return response
 
 @permission_required('admin.can_add_log_entry')
@@ -135,7 +127,7 @@ def projectnumber_upload(request):
     io_string = io.StringIO(data_set)
     next(io_string)
     for column in csv.reader(io_string, delimiter=',', quotechar="|"):
-        _, created = Project_number.objects.update_or_create(
+        _, created = Projectnumber.objects.update_or_create(
             name=column[0]
         )
     context = {}
@@ -156,10 +148,101 @@ def projectname_upload(request):
     data_set = csv_file.read().decode('UTF-8')
     io_string = io.StringIO(data_set)
     next(io_string)
-    projectname_id = row['project_number']
     for column in csv.reader(io_string, delimiter=',', quotechar="|"):
-        _, created = Project_name.objects.update_or_create(
-            project_number=column[0],
+        _, created = Projectname.objects.update_or_create(
+            projectnumber=Projectnumber.objects.get(name=column[0]),
+            name=column[1]
+        )
+    context = {}
+    return render(request, template, context)
+
+@permission_required('admin.can_add_log_entry')
+def client_upload(request):
+    template = "ll/client_upload.html"
+    prompt ={ 'order': 'Order of the CSV should be project number'}
+
+    if request.method == "GET":
+        return render(request, template, prompt)
+    csv_file = request.FILES['file']
+
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request, 'This is not a csv file')
+
+    data_set = csv_file.read().decode('UTF-8')
+    io_string = io.StringIO(data_set)
+    next(io_string)
+    for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+        _, created = Client.objects.update_or_create(
+            projectnumber=Projectnumber.objects.get(name=column[0]),
+            name=column[1]
+        )
+    context = {}
+    return render(request, template, context)
+
+@permission_required('admin.can_add_log_entry')
+def projectlocation_upload(request):
+    template = "ll/projectlocation_upload.html"
+    prompt ={ 'order': 'Order of the CSV should be project number'}
+
+    if request.method == "GET":
+        return render(request, template, prompt)
+    csv_file = request.FILES['file']
+
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request, 'This is not a csv file')
+
+    data_set = csv_file.read().decode('UTF-8')
+    io_string = io.StringIO(data_set)
+    next(io_string)
+    for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+        _, created = Projectlocation.objects.update_or_create(
+            projectnumber=Projectnumber.objects.get(name=column[0]),
+            name=column[1]
+        )
+    context = {}
+    return render(request, template, context)
+
+@permission_required('admin.can_add_log_entry')
+def marketsector_upload(request):
+    template = "ll/marketsector_upload.html"
+    prompt ={ 'order': 'Order of the CSV should be project number'}
+
+    if request.method == "GET":
+        return render(request, template, prompt)
+    csv_file = request.FILES['file']
+
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request, 'This is not a csv file')
+
+    data_set = csv_file.read().decode('UTF-8')
+    io_string = io.StringIO(data_set)
+    next(io_string)
+    for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+        _, created = Marketsector.objects.update_or_create(
+            projectnumber=Projectnumber.objects.get(name=column[0]),
+            name=column[1]
+        )
+    context = {}
+    return render(request, template, context)
+
+@permission_required('admin.can_add_log_entry')
+def memo_upload(request):
+    template = "ll/memo_upload.html"
+    prompt ={ 'order': 'Order of the CSV should be project number'}
+
+    if request.method == "GET":
+        return render(request, template, prompt)
+    csv_file = request.FILES['file']
+
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request, 'This is not a csv file')
+
+    data_set = csv_file.read().decode('UTF-8')
+    io_string = io.StringIO(data_set)
+    next(io_string)
+    for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+        _, created = Memo.objects.update_or_create(
+            projectnumber=Projectnumber.objects.get(name=column[0]),
             name=column[1]
         )
     context = {}

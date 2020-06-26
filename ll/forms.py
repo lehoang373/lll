@@ -10,4 +10,4 @@ class CustomerForm(forms.ModelForm):
 class LessonForm(forms.ModelForm):
     class Meta:
         model = Lesson
-        fields = ('project_number', 'project_name', 'client', 'project_location', 'description', 'division','market_sector','discipline','link_file')
+        fields = ('projectnumber', 'projectname', 'client', 'projectlocation', 'description', 'division','marketsector','discipline','memo','linkfile')

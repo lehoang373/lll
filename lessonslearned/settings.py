@@ -25,6 +25,7 @@ SECRET_KEY = '4v7@ndrcf)nti0wz1tq=e7si88f7(cz7qg$gpcxeq4@!usgn68'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 USE_DJANGO_JQUERY = True
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'django.contrib.sites',
     'smart_selects',
+    'import_export',
 ]
 
 SITE_ID = 1
